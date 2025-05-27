@@ -57,5 +57,56 @@ namespace RestaurantLibrary.UnitTests
                 isAvailable: true,
                 cookingTime: 30);
         }
+
+        [Test]
+        public void Appetizer_GetInfo_ReturnsCorrectInfo()
+        {
+            var appetizer = new Appetizer(
+                name: "Брускетта",
+                cuisine: CuisineType.Italian,
+                description: "Итальянская закуска с помидорами и базиликом",
+                price: 250,
+                isAvailable: true,
+                cookingTime: 10,
+                type: AppetizerType.Cold);
+
+            var info = appetizer.GetInfo();
+
+            Assert.That(info.Length, Is.EqualTo(4));
+            Assert.That(info[3], Is.EqualTo("Тип закуски: холодная"));
+        }
+
+        [Test]
+        public void MainCourse_GetInfo_ReturnsCorrectInfo()
+        {
+            var mainCourse = new MainCourse(
+                name: "Стейк",
+                cuisine: CuisineType.Russian,
+                description: "Говяжий стейк средней прожарки",
+                price: 1200,
+                isAvailable: true,
+                cookingTime: 25,
+                mainIngredient: MainIngredientType.Meat,
+                sideDish: "картофельное пюре и овощи гриль");
+
+            var info = mainCourse.GetInfo();
+
+            Assert.That(info.Length, Is.EqualTo(5));
+            Assert.That(info[3], Is.EqualTo("Основной продукт: мясо"));
+            Assert.That(info[4], Is.EqualTo("Гарнир: картофельное пюре и овощи гриль"));
+        }
+
+        [Test]
+        public void PolymorphismTest()
+        {
+            Dish dish1 = new Appetizer("Салат", CuisineType.Russian, "Овощной", 300, true, 15, AppetizerType.Cold);
+            Dish dish2 = new MainCourse("Лосось", CuisineType.French, "На гриле", 1500, true, 20, MainIngredientType.Fish, "рис");
+
+            var info1 = dish1.GetInfo();
+            var info2 = dish2.GetInfo();
+
+            Assert.That(info1.Length, Is.EqualTo(4));
+            Assert.That(info2.Length, Is.EqualTo(5));
+        }
     }
 }

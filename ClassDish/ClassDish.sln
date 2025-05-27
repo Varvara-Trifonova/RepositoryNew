@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantLibrary", "ClassDish\RestaurantLibrary.csproj", "{4B3D6039-A2C5-40BC-9EFC-AF8D1D35DBC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantLibrary.UnitTests", "..\DishLibrary\RestaurantLibraryTest\RestaurantLibrary.UnitTests.csproj", "{3D8C88ED-44FF-4685-B1EB-914E1D887D89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantLibrary.UnitTests", "..\DishLibrary\RestaurantLibraryTest\RestaurantLibrary.UnitTests.csproj", "{3D8C88ED-44FF-4685-B1EB-914E1D887D89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
