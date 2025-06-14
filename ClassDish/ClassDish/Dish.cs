@@ -7,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace ClassDish
 {
-    public class Dish
+    public class Dish : IComparable<Dish>
     {
-        public readonly string Name;          
-        public CuisineType Cuisine { get; }   
-        public string Description { get; set; } 
-        public decimal Price { get; set; }    
-        public bool IsAvailable { get; set; } 
-        public int CookingTime { get; set; }  
+        public readonly string Name;
+        public CuisineType Cuisine { get; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public bool IsAvailable { get; set; }
+        public int CookingTime { get; set; }
 
         public Dish(string name, CuisineType cuisine, string description,
-                   decimal price, bool isAvailable, int cookingTime)
+            decimal price, bool isAvailable, int cookingTime)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Название блюда не может быть пустым");
 
@@ -34,9 +33,20 @@ namespace ClassDish
             CookingTime = cookingTime;
         }
 
+
+        public int CompareTo(Dish other)
+        {
+            if (other == null) return 1;
+
+            int cuisineComparison = Cuisine.CompareTo(other.Cuisine);
+            if (cuisineComparison != 0)
+                return cuisineComparison;
+
+            return string.Compare(other.Name, Name, StringComparison.Ordinal);
+        }
+
         public virtual string[] GetInfo()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
             var info = new string[3];
             info[0] = $"Блюдо: {Name}";
 

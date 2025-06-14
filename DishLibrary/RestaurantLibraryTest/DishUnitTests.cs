@@ -2,6 +2,7 @@
 using DishLibrary;
 using NUnit.Framework;
 using ClassDish;
+using System;
 
 namespace RestaurantLibrary.UnitTests
 {
@@ -34,6 +35,7 @@ namespace RestaurantLibrary.UnitTests
             Assert.Throws<ArgumentException>(() =>
                 new Dish("Борщ", CuisineType.Russian, "Описание", 100, true, 0));
         }
+
 
         [Test]
         public void GetInfoTest()
@@ -107,6 +109,60 @@ namespace RestaurantLibrary.UnitTests
 
             Assert.That(info1.Length, Is.EqualTo(4));
             Assert.That(info2.Length, Is.EqualTo(5));
+        }
+    }
+
+    [TestFixture]
+    public class MenuUnitTests
+    {
+        [Test]
+        public void Dish_CompareTo_ReturnsCorrectOrder()
+        {
+            var dish1 = new Dish("Борщ", CuisineType.Russian, "Традиционный суп", 300, true, 30);
+            var dish2 = new Dish("Салат", CuisineType.Russian, "Овощной", 250, true, 15);
+            var dish3 = new Dish("Паста", CuisineType.Italian, "С морепродуктами", 450, true, 25);
+
+            Assert.That(dish1.CompareTo(dish2), Is.GreaterThan(0));
+            Assert.That(dish1.CompareTo(dish3), Is.LessThan(0));
+            Assert.That(dish1.CompareTo(dish1), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void Menu_Constructor_CreatesSortedUniqueCollection()
+        {
+            var date = DateTime.Today;
+            var dish1 = new Dish("Борщ", CuisineType.Russian, "Традиционный суп", 300, true, 30);
+            var dish2 = new Dish("Салатик", CuisineType.Russian, "Овощной", 250, true, 15);
+            var dish3 = new Dish("Паста", CuisineType.Italian, "С морепродуктами", 450, true, 25);
+           
+
+            var menu = new Menu(date, new List<Dish> { dish1, dish2, dish3});
+         
+            Assert.That(menu.Date, Is.EqualTo(date));
+
+            var dishes = new List<Dish>(menu);
+            Assert.That(dishes[0].Name, Is.EqualTo("Салатик")); 
+            Assert.That(dishes[1].Name, Is.EqualTo("Борщ"));  
+            Assert.That(dishes[2].Name, Is.EqualTo("Паста")); 
+        }
+
+        [Test]
+        public void Menu_IEnumerable_AllowsIteration()
+        {
+            var date = DateTime.Today;
+            var dish1 = new Dish("Борщ", CuisineType.Russian, "Традиционный суп", 300, true, 30);
+            var dish2 = new Dish("Салат", CuisineType.Russian, "Овощной", 250, true, 15);
+
+            var menu = new Menu(date, new List<Dish> { dish1, dish2 });
+
+            int count = 0;
+            foreach (var dish in menu)
+            {
+                count++;
+                Assert.That(dish, Is.InstanceOf<Dish>());
+            }
+
+            Assert.That(count, Is.EqualTo(2));
         }
     }
 }
